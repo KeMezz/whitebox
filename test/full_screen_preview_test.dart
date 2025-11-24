@@ -3,15 +3,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:whitebox/full_screen_preview.dart';
 
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:whitebox/l10n/generated/app_localizations.dart';
+
 void main() {
-  testWidgets('FullScreenPreview displays image in InteractiveViewer', (
+  testWidgets('FullScreenPreview는 InteractiveViewer 안에 이미지를 표시해야 한다', (
     WidgetTester tester,
   ) async {
     // Create a dummy file
     final file = File('dummy_path');
 
     await tester.pumpWidget(
-      MaterialApp(home: FullScreenPreview(imageFile: file)),
+      MaterialApp(
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: const [Locale('en'), Locale('ko'), Locale('ja')],
+        home: FullScreenPreview(imageFile: file),
+      ),
     );
 
     // Verify InteractiveViewer is present

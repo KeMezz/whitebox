@@ -5,7 +5,7 @@ import 'package:whitebox/image_processor.dart';
 import 'package:image/image.dart' as img;
 
 void main() {
-  group('ImageProcessor Logic', () {
+  group('ImageProcessor 로직 테스트', () {
     late Directory tempDir;
 
     setUp(() async {
@@ -16,7 +16,7 @@ void main() {
       await tempDir.delete(recursive: true);
     });
 
-    test('processImageInIsolate creates a square image with padding', () async {
+    test('processImageInIsolate는 패딩이 포함된 정사각형 이미지를 생성해야 한다', () async {
       // Create a dummy 100x50 image
       final image = img.Image(width: 100, height: 50);
       img.fill(image, color: img.ColorRgb8(255, 0, 0)); // Red
@@ -47,33 +47,26 @@ void main() {
       expect(pixel.b, 255);
     });
 
-    test(
-      'processImageInIsolate creates a square image without padding',
-      () async {
-        // Create a dummy 100x50 image
-        final image = img.Image(width: 100, height: 50);
-        img.fill(image, color: img.ColorRgb8(255, 0, 0)); // Red
-        final bytes = Uint8List.fromList(img.encodePng(image));
+    test('processImageInIsolate는 패딩 없이 정사각형 이미지를 생성해야 한다', () async {
+      // Create a dummy 100x50 image
+      final image = img.Image(width: 100, height: 50);
+      img.fill(image, color: img.ColorRgb8(255, 0, 0)); // Red
+      final bytes = Uint8List.fromList(img.encodePng(image));
 
-        final request = ProcessRequest(
-          bytes,
-          tempDir.path,
-          false,
-        ); // No padding
+      final request = ProcessRequest(bytes, tempDir.path, false); // No padding
 
-        final processedFile = await processImageInIsolate(request);
+      final processedFile = await processImageInIsolate(request);
 
-        expect(processedFile, isNotNull);
+      expect(processedFile, isNotNull);
 
-        final processedImage = img.decodeImage(
-          await processedFile!.readAsBytes(),
-        );
-        expect(processedImage, isNotNull);
+      final processedImage = img.decodeImage(
+        await processedFile!.readAsBytes(),
+      );
+      expect(processedImage, isNotNull);
 
-        // Should be square
-        expect(processedImage!.width, 100);
-        expect(processedImage.height, 100);
-      },
-    );
+      // Should be square
+      expect(processedImage!.width, 100);
+      expect(processedImage.height, 100);
+    });
   });
 }
