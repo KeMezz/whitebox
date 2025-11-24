@@ -13,8 +13,8 @@ class ImageProcessor {
 
       // Run heavy image processing in a separate isolate
       return await compute(
-        _processImageInIsolate,
-        _ProcessRequest(bytes, tempPath, applyPadding),
+        processImageInIsolate,
+        ProcessRequest(bytes, tempPath, applyPadding),
       );
     } catch (e) {
       print('Error processing image: $e');
@@ -23,15 +23,15 @@ class ImageProcessor {
   }
 }
 
-class _ProcessRequest {
+class ProcessRequest {
   final Uint8List bytes;
   final String tempPath;
   final bool applyPadding;
 
-  _ProcessRequest(this.bytes, this.tempPath, this.applyPadding);
+  ProcessRequest(this.bytes, this.tempPath, this.applyPadding);
 }
 
-Future<File?> _processImageInIsolate(_ProcessRequest request) async {
+Future<File?> processImageInIsolate(ProcessRequest request) async {
   try {
     final image = img.decodeImage(request.bytes);
 
