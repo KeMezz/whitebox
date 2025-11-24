@@ -1,14 +1,17 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:gallery_saver/gallery_saver.dart';
-import 'package:share_plus/share_plus.dart';
 import 'image_processor.dart';
 import 'settings_screen.dart';
 import 'full_screen_preview.dart';
 
+import 'services.dart';
+
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final GallerySaverService? gallerySaverService;
+  final ShareService? shareService;
+
+  const HomeScreen({super.key, this.gallerySaverService, this.shareService});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -17,6 +20,15 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final ImagePicker _picker = ImagePicker();
   final ImageProcessor _processor = ImageProcessor();
+  late final GallerySaverService _gallerySaver;
+  late final ShareService _shareService;
+
+  @override
+  void initState() {
+    super.initState();
+    _gallerySaver = widget.gallerySaverService ?? GallerySaverService();
+    _shareService = widget.shareService ?? ShareService();
+  }
 
   // Store original XFiles to re-process if padding changes
   List<XFile> _originalImages = [];
@@ -181,7 +193,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     try {
       for (var image in _processedImages) {
-        await GallerySaver.saveImage(image.path, albumName: 'Whitebox');
+        await _gallerySaver.saveImage(image.path, albumName: 'Whitebox');
       }
 
       if (mounted) {
@@ -250,7 +262,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if (_processedImages.isEmpty) return;
 
     final files = _processedImages.map((file) => XFile(file.path)).toList();
-    await Share.shareXFiles(files);
+    await _shareService.shareXFiles(files);
   }
 
   void _clearImages() {
