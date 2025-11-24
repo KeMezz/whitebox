@@ -7,6 +7,8 @@ import 'full_screen_preview.dart';
 
 import 'services.dart';
 
+import 'package:whitebox/l10n/generated/app_localizations.dart';
+
 class HomeScreen extends StatefulWidget {
   final GallerySaverService? gallerySaverService;
   final ShareService? shareService;
@@ -133,22 +135,6 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  void _openSettings() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => SettingsScreen(
-          applyPadding: _applyPadding,
-          onPaddingChanged: (value) {
-            setState(() {
-              _applyPadding = value;
-            });
-            _processImages(reprocessAll: true);
-          },
-        ),
-      ),
-    );
-  }
-
   Future<void> _saveImages() async {
     if (_processedImages.isEmpty) return;
 
@@ -157,25 +143,30 @@ class _HomeScreenState extends State<HomeScreen> {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: Colors.grey[900],
-          title: const Text(
-            'Download Images',
-            style: TextStyle(color: Colors.white),
+          title: Text(
+            AppLocalizations.of(context)!.downloadTitle,
+            style: const TextStyle(color: Colors.white),
           ),
           content: Text(
-            'Do you want to download ${_processedImages.length} images?',
-            style: TextStyle(color: Colors.white70),
+            AppLocalizations.of(
+              context,
+            )!.downloadContent(_processedImages.length),
+            style: const TextStyle(color: Colors.white70),
           ),
           actions: <Widget>[
             TextButton(
-              child: const Text('Cancel', style: TextStyle(color: Colors.grey)),
+              child: Text(
+                AppLocalizations.of(context)!.cancel,
+                style: const TextStyle(color: Colors.grey),
+              ),
               onPressed: () {
                 Navigator.of(context).pop(false);
               },
             ),
             TextButton(
-              child: const Text(
-                'Download',
-                style: TextStyle(
+              child: Text(
+                AppLocalizations.of(context)!.download,
+                style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                 ),
@@ -198,15 +189,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Images saved to gallery')),
+          SnackBar(content: Text(AppLocalizations.of(context)!.saveSuccess)),
         );
       }
     } catch (e) {
       print('Error saving images: $e');
       if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(const SnackBar(content: Text('Error saving images')));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(AppLocalizations.of(context)!.saveError)),
+        );
       }
     }
   }
@@ -218,31 +209,34 @@ class _HomeScreenState extends State<HomeScreen> {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: Colors.grey[900], // Dark dialog
-          title: const Text(
-            'Clear List?',
-            style: TextStyle(color: Colors.white),
+          title: Text(
+            AppLocalizations.of(context)!.clearListTitle,
+            style: const TextStyle(color: Colors.white),
           ),
-          content: const SingleChildScrollView(
+          content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
                 Text(
-                  'Do you want to clear the image list?',
-                  style: TextStyle(color: Colors.white70),
+                  AppLocalizations.of(context)!.clearListContent,
+                  style: const TextStyle(color: Colors.white70),
                 ),
               ],
             ),
           ),
           actions: <Widget>[
             TextButton(
-              child: const Text('No', style: TextStyle(color: Colors.grey)),
+              child: Text(
+                AppLocalizations.of(context)!.no,
+                style: const TextStyle(color: Colors.grey),
+              ),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: const Text(
-                'Yes',
-                style: TextStyle(
+              child: Text(
+                AppLocalizations.of(context)!.yes,
+                style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                 ),
@@ -276,12 +270,27 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Whitebox'),
-        elevation: 0,
+        title: Text(AppLocalizations.of(context)!.appTitle),
+        backgroundColor: Colors.black,
         actions: [
           IconButton(
             icon: const Icon(Icons.settings),
-            onPressed: _openSettings,
+            onPressed: () async {
+              await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SettingsScreen(
+                    applyPadding: _applyPadding,
+                    onPaddingChanged: (value) {
+                      setState(() {
+                        _applyPadding = value;
+                      });
+                      _processImages(reprocessAll: true);
+                    },
+                  ),
+                ),
+              );
+            },
           ),
           if (_originalImages.isNotEmpty)
             IconButton(
@@ -301,9 +310,23 @@ class _HomeScreenState extends State<HomeScreen> {
           Expanded(
             child: _processedImages.isEmpty && !_isProcessing
                 ? Center(
-                    child: Text(
-                      'Select images to start',
-                      style: TextStyle(color: Colors.grey[600]),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(
+                          Icons.add_photo_alternate,
+                          size: 64,
+                          color: Colors.grey,
+                        ),
+                        const SizedBox(height: 16),
+                        Text(
+                          AppLocalizations.of(context)!.selectImages,
+                          style: const TextStyle(
+                            color: Colors.grey,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ],
                     ),
                   )
                 : GridView.builder(

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:whitebox/l10n/generated/app_localizations.dart';
+
 class SettingsScreen extends StatefulWidget {
   final bool applyPadding;
   final ValueChanged<bool> onPaddingChanged;
@@ -26,21 +28,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Settings')),
+      appBar: AppBar(
+        title: Text(AppLocalizations.of(context)!.settingsTitle),
+        backgroundColor: Colors.black,
+      ),
       body: ListView(
         children: [
           SwitchListTile(
-            title: const Text('Apply Letterbox to All Sides'),
-            subtitle: const Text('Adds white padding around the entire image'),
+            title: Text(AppLocalizations.of(context)!.applyPadding),
+            subtitle: Text(AppLocalizations.of(context)!.applyPaddingSubtitle),
             value: _applyPadding,
-            onChanged: (value) {
+            onChanged: (bool value) {
               setState(() {
                 _applyPadding = value;
               });
               widget.onPaddingChanged(value);
             },
             activeColor: Colors.white,
-            activeTrackColor: Colors.grey,
+            contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
           ),
         ],
       ),
