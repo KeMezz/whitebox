@@ -1,0 +1,21 @@
+{
+  "appTitle": "Whitebox",
+  "selectImages": "이미지를 선택하여 시작하세요",
+  "settingsTitle": "설정",
+  "applyPadding": "모든 면에 여백 적용",
+  "applyPaddingSubtitle": "이미지 전체 주위에 흰색 여백을 추가합니다",
+  "clearListTitle": "목록 지우기",
+  "clearListContent": "이미지 목록을 지우시겠습니까?",
+  "addImagesTitle": "이미지 추가",
+  "addImagesContent": "새 이미지를 추가하기 전에 기존 이미지를 지우시겠습니까?",
+  "keepExisting": "기존 유지",
+  "clear": "지우기",
+  "downloadTitle": "이미지 다운로드",
+  "downloadContent": "{count}장의 이미지를 다운로드하시겠습니까?",
+  "cancel": "취소",
+  "download": "다운로드",
+  "saveSuccess": "갤러리에 이미지가 저장되었습니다",
+  "saveError": "이미지 저장 중 오류 발생",
+  "yes": "예",
+  "no": "아니요"
+}

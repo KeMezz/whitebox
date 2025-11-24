@@ -1,0 +1,21 @@
+{
+  "appTitle": "Whitebox",
+  "selectImages": "画像を選択して開始",
+  "settingsTitle": "設定",
+  "applyPadding": "全側面に余白を適用",
+  "applyPaddingSubtitle": "画像の周囲全体に白い余白を追加します",
+  "clearListTitle": "リストをクリア",
+  "clearListContent": "画像リストをクリアしますか？",
+  "addImagesTitle": "画像を追加",
+  "addImagesContent": "新しい画像を追加する前に、既存の画像をクリアしますか？",
+  "keepExisting": "既存を維持",
+  "clear": "クリア",
+  "downloadTitle": "画像をダウンロード",
+  "downloadContent": "{count}枚の画像をダウンロードしますか？",
+  "cancel": "キャンセル",
+  "download": "ダウンロード",
+  "saveSuccess": "ギャラリーに画像を保存しました",
+  "saveError": "画像の保存中にエラーが発生しました",
+  "yes": "はい",
+  "no": "いいえ"
+}

@@ -1,0 +1,28 @@
+{
+  "appTitle": "Whitebox",
+  "selectImages": "Select images to start",
+  "settingsTitle": "Settings",
+  "applyPadding": "Apply Letterbox to All Sides",
+  "applyPaddingSubtitle": "Adds white padding around the entire image",
+  "clearListTitle": "Clear List?",
+  "clearListContent": "Do you want to clear the image list?",
+  "addImagesTitle": "Add Images",
+  "addImagesContent": "Do you want to clear the existing images before adding new ones?",
+  "keepExisting": "Keep Existing",
+  "clear": "Clear",
+  "downloadTitle": "Download Images",
+  "downloadContent": "Do you want to download {count} images?",
+  "@downloadContent": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "cancel": "Cancel",
+  "download": "Download",
+  "saveSuccess": "Images saved to gallery",
+  "saveError": "Error saving images",
+  "yes": "Yes",
+  "no": "No"
+}
