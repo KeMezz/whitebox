@@ -45,8 +45,7 @@ void main() {
   });
 
   testWidgets('설정 버튼을 누르면 설정 화면으로 이동해야 한다', (WidgetTester tester) async {
-    // This test is tricky because we can't easily mock ImagePicker inside HomeScreen
-    // without further refactoring    await tester.pumpWidget(
+    await tester.pumpWidget(
       MaterialApp(
         localizationsDelegates: const [
           AppLocalizations.delegate,
@@ -54,11 +53,7 @@ void main() {
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
-        supportedLocales: const [
-          Locale('en'),
-          Locale('ko'),
-          Locale('ja'),
-        ],
+        supportedLocales: const [Locale('en'), Locale('ko'), Locale('ja')],
         home: HomeScreen(
           gallerySaverService: mockGallerySaver,
           shareService: mockShareService,
