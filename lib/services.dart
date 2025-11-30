@@ -1,9 +1,9 @@
-import 'package:gallery_saver/gallery_saver.dart';
+import 'package:gal/gal.dart';
 import 'package:share_plus/share_plus.dart';
 
 class GallerySaverService {
-  Future<bool?> saveImage(String path, {String? albumName}) {
-    return GallerySaver.saveImage(path, albumName: albumName);
+  Future<void> saveImage(String path, {String? albumName}) async {
+    await Gal.putImage(path, album: albumName);
   }
 }
 
